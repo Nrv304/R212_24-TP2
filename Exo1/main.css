@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@layer theme {
+  /* - Variables ------------------ */
+  :root {
+    /* Primitive Tokens */
+    --clr-soft-red: hsl(35, 77%, 62%);
+    --clr-soft-orange: hsl(5, 85%, 63%);
+    --clr-off-white: hsl(36, 100%, 99%);
+    --clr-grayish-blue: hsl(233, 8%, 79%);
+    --clr-dark-grayish-blue: hsl(236, 13%, 42%);
+    --very-dark-blue: hsl(240, 100%, 5%);
+
+    /* Font */
+    --ff-primary: "Inter", sans-serif;
+
+    /* Sementic Tokens : Contextualisation des couleurs */
+    --bg-color: var(--clr-off-white);
+    --title-color: var(--clr-very-dark-blue);
+    --text-aside: var(--clr-soft-orange);
+    --text-color: var(--clr-dark-grayish-blue);
+
+    --btn-color: var(--clr-off-white);
+    --btn-color-hover: var(--clr-soft-red);
+    --aside-bg: var(--clr-off-white);
+    --btn-bg: var(--clr-soft-orange);
+  }
+}
+
+@layer reset {
+  /* Box sizing rules */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Remove default margin */
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Set core root defaults */
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+
+  /* Set core body defaults */
+  body {
+    min-height: 100vh;
+    background-color: var(--clr-off-white);
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+  }
+
+  /* A elements that don't have a class get default styles */
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Make images easier to work with */
+  img,
+  picture {
+    max-width: 100%;
+    display: block;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* - Style Général ------------------ */
+@layer global {
+  body {
+    padding: 1rem;
+    font-family: var(--ff-primary);
+    color: var(--title-color);
+  }
+
+  .container {
+    max-width: 70rem;
+    margin-inline: auto;
+  }
+}
+
+@layer components {
+  /* - Header ------------------ */
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5em 1.65em;
+  }
+
+  /* - Main-nav */
+
+  .main-nav {
+    border: solid 1px red;
+    /* Position fixe */
+    position: fixed;
+    /* top:0  right:0 bottom:0 left:15% en une seule propriété */
+    inset: 0 0 0 15%;
+    /* Disposition en colonne centrée */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Arrière plan */
+    background-color: var(--bg-color);
+    /* Translation de 100% de la largeur de l'élément à droite */
+    translate: 100% 0;
+    /* Transition de la translation */
+    transition: translate 0.2s ease-in-out  ;
+  }
+  .main-nav__list {
+    /* Disposition en colonne */
+    display: flex;
+    flex-direction: column;
+    /* Gouttiére de 2x16px */
+    gap: 2rem ;
+    /* Taille de la police */
+    font-size: 1.4rem;
+    /* Couleur du texte */
+    color: var(--text-color);
+  }
+
+  .main-nav__link {
+    /* Marge intérieure de .2em haut/bas et 1em droite/gauche */
+    padding: 0.2em 1em;
+  }
+
+  .main-nav__link:hover {
+    /* Couleur du texte */
+    color: var(--btn-color-hover);
+  }
+  /* Réadaptation du menu pour les écran > M */
+  @media (min-width: 54em) {
+    .main-nav {
+      /* Retour à la valeur initiale de la propriété position*/
+      
+      /* Arrière plan transparent */
+      
+      /* Réinitialise la translation */
+      
+    }
+
+    .main-nav__list {
+      /* Position en ligne */
+      
+      /* Gouttiére de 2x16px */
+ 
+      /* Redéfinir la taille de la police */
+
+      /* Couleur du texte */
+
+    }
+
+    .main-nav__link {
+      /* Marge intérieure nulle */
+    }
+  }
+
+  /* Menu Off canvas */
+
+  .burger {
+    /* Positionne le burger sur un layer 10 */
+    position: relative;
+    z-index:10;
+    /* Curseur pointer */
+
+    @media (min-width: 54em) {
+      & {
+        /* Masquer le burger */
+        display: none;
+      }
+    }
+  }
+
+  .burger__line:nth-child(1) {
+    /* Variable déterminant la position en y : augmente de 9px (7px position d'origine + 9px = 16px centre du svg */
+    --_trans: 9px;
+    /* Variable déterminant la rotation 45deg */
+    --_rot: 45deg;
+    /* Orignie de la transformation (16px,7px) centre de la ligne  */
+    transform-origin: 16px 7px ;
+    /* Temporisation retour : attente .2s > rotate durée .2s > translation durée .2s   */
+    transition-delay: 0.2s 0.2s 0.2s;
+  }
+
+  .burger__line:nth-child(2) {
+    /* Temporisation retour : .4s d'attente > opacité .2s */
+    transition: opacity 0.2s 0.4s;
+    transition-delay: 0.4s;
+
+  }
+
+  .burger__line:nth-child(3) {
+    /* Variable déterminant la position en y : diminue de 9px (25px position d'origine - 9px = 16px centre du svg */
+    --_trans: -9px;
+    /* Variable déterminant la rotation -45deg */
+    --_rot: -45deg;
+    /* Orignie de la transformation (16px,25px)  */
+    transform-origin: 16px 25px;
+    /* Temporisation retour : attente .2s > rotate durée .2s > translation durée .2s   */
+    transition-delay: 0.2s 0.2s 0.2s;
+  }
+
+  /* Au survol du burger la ligne 1 et 3 change de couleur de stroke */
+  .burger:hover :where(:nth-child(1), :nth-child(3)) {
+    stroke: var(--btn-bg);
+  }
+
+  /* - Checked */
+
+  /* Pour toutes les lignes */
+  [type="checkbox"]:checked ~ .label .burger .burger__line {
+    /* Applique la translation et la rotation à partir des variables privée de chaque ligne */
+  translate: 0 var(--_trans);
+  rotate: var(--_rot);
+    /* Transition aller : après .2s d'attente > translate d'une durée de .2s > rotation d'une durée de .2s */
+  transition: opacity 0.2s;
+  }
+
+  /* Pour la ligne 2 */
+  [type="checkbox"]:checked ~ .label .burger .burger__line:nth-child(2) {
+    /* Opacité 0 */
+    opacity: 0;
+    /* Transition aller : opacité de .2s sans delay */
+    transition: opacity 0.2s;
+  }
+
+  /* Pour le menu */
+  [type="checkbox"]:checked ~ .main-nav {
+    /* Réinitialise la translation */
+    translate: 0;
+    rotate: 360deg;
+  }
+}
+
+.content {
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  gap: 1.5rem;
+}
+
+.content__title {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 2rem;
+}
+
+.content__description {
+  font-size: 0.73rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+  color: var(--text-color);
+}
+
+.content__button {
+  margin-right: 8.5rem;
+  text-transform: uppercase;
+  padding: 0.5em 1em;
+  background-color: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.1rem;
+}
+
+.content__button:hover {
+  background-color: var(--btn-color-hover);
+}
+
+.news {
+  margin-bottom: 2.5rem ;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  background-color: var(--very-dark-blue);
+}
+
+.news__container {
+  margin: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.news__container_line {
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 0.1rem solid var(--text-color);
+}
+
+.news__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  color: var(--clr-soft-red);
+}
+
+.news__subtitle {
+  font-size: 0.73rem;
+  font-weight: 700;
+  line-height: 1.2rem;
+  color: var(--bg-color);
+}
+
+.news__description {
+  font-size: 0.73rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+  color: var(--text-color);
+}
+
+.articles {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.articles__container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.articles__image {
+  width: 30%;
+  height:fit-content;
+}
+
+.articles__container_text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.articles__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  color: var(--title-color);
+}
+
+.articles__number{
+  margin-right:9rem ;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  color: var(--clr-grayish-blue);
+}
